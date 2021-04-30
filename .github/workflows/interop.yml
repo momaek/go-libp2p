@@ -1,9 +1,10 @@
 on: [push, pull_request]
+name: Interop Tests
 
 jobs:
   unit:
     runs-on: ubuntu-latest
-    name: Js/Go Interop tests
+    name: Js/Go
     steps:
       - uses: actions/setup-go@v2
         with:

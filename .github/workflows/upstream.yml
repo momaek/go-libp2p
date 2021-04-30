@@ -1,4 +1,5 @@
 on: [push, pull_request]
+name: Upstream Test
 
 jobs:
   unit:
@@ -16,7 +17,7 @@ jobs:
           - 'libp2p/go-libp2p-kad-dht'
           - 'ipfs/go-bitswap'
     runs-on: ${{ matrix.os }}-latest
-    name: Upstream ${{ matrix.upstream }} unit tests (${{ matrix.os }}, Go ${{ matrix.go }})
+    name: ${{ matrix.upstream }} unit tests (${{ matrix.os }}, Go ${{ matrix.go }})
     steps:
       - uses: actions/setup-go@v2
         with:
