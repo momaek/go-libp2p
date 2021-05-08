@@ -1,0 +1,23 @@
+on: [push, pull_request]
+
+jobs:
+  directories:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - id: directories
+      shell: bash
+      run: |
+        directories="[]"
+        for dir in $(find . \( -name vendor -o -name '[._].*' -o -name node_modules \) -prune -o -name go.mod -print | sed 's:/go.mod$::'); do
+          echo "found $dir"
+          directories=$(echo $directories | jq -c ". + [ \"$dir\" ]")
+          echo $directories
+        done
+        echo "::set-output name=directories::$directories"
+    - run: |
+        echo `${{ steps.directories.outputs.directories }}`
+        for dir in $(echo `${{ steps.directories.outputs.directories }}` | jq -r ".[]"); do
+          echo $dir   
+        done
+
